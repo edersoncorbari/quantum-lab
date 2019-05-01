@@ -1,5 +1,6 @@
 import qiskit
-from qiskit import IBMQ, ClassicalRegister, QuantumRegister, QuantumCircuit
+from qiskit ClassicalRegister, QuantumRegister, QuantumCircuit
+from qiskit IBMQ
 from configparser import RawConfigParser
 
 # Setup the API key for the real quantum computer.
@@ -15,15 +16,16 @@ program = QuantumCircuit(qr, cr);
 # Measure the value of the qubit.
 program.measure(qr, cr);
 
-# Execute the program in the simulator.
-print("Running on the simulator.")
+# Execute the program in the (simulator).
+print("Running on the simulator: qasm_simulator")
 job = qiskit.execute(program, qiskit.Aer.get_backend('qasm_simulator'), shots=100)
-counts = job.result().get_counts()
-print('Hello World! ' + str(counts))
+print("Result:", str(job.result().get_counts()))
 
-# Execute the program on a real quantum computer.
+# Execute the program on a (real quantum computer).
 backend = qiskit.providers.ibmq.least_busy(qiskit.IBMQ.backends(simulator=False))
-print("Running on", backend.name())
+print("Running on real quantum computer: ", backend.name())
 job = qiskit.execute(program, backend, shots=100)
-counts = job.result().get_counts()
-print('Hello Quantum World! ' + str(counts))
+print("Result:", str(job.result().get_counts()))
+
+# print(program.qasm())
+# qc.draw()
