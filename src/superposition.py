@@ -3,8 +3,8 @@ from qiskit ClassicalRegister, QuantumRegister, QuantumCircuit
 from qiskit IBMQ
 from configparser import RawConfigParser
 
-#type = 'real' # Run program on the simulator or real quantum machine.
-type = '' # Run program on the simulator or real quantum machine.
+type = 'real' # Run program on the simulator or real quantum machine.
+#type = '' # Run program on the simulator or real quantum machine.
 
 def run(program, type, shots = 100):
   if type == 'real':
@@ -46,8 +46,10 @@ program.measure(qr, cr);
 print(run(program, type))
 
 #
-# Example 2: Create a Bell state (|00> + |11>), (|00> - |11>), (|01> + |10>), (|01> - |10>): Entangle 2 qubits, with the first in superposition (existing as 0 and 1 simulataneously or 50% chance of either value) and measure the results, they should be half 00 and half 11.
+# Example 2: Create a Bell state (|00> + |11>), (|00> - |11>), (|01> + |10>), (|01> - |10>): 
 #
+# Entangle 2 qubits, with the first in superposition (existing as 0 and 1 simulataneously or 50% chance of either value) 
+# and measure the results, they should be half 00 and half 11.
 
 # Setup qubits.
 qr = QuantumRegister(2)
@@ -57,7 +59,9 @@ program = QuantumCircuit(qr, cr);
 # Place the first qubit into a superposition, existing as both 0 and 1 simultaneously.
 program.h(qr[0])
 
-# Entangle the two qubits with a controlled NOT operator. If the first qubit is 1, the second qubit will be inverted. Depending on the initial qubit states, this results in the 4 Bell states (|00> + |11>), (|00> - |11>), (|01> + |10>), (|01> - |10>).
+# Entangle the two qubits with a controlled NOT operator. If the first qubit is 1, 
+# the second qubit will be inverted. Depending on the initial qubit states, this results in 
+# the 4 Bell states (|00> + |11>), (|00> - |11>), (|01> + |10>), (|01> - |10>).
 program.cx(qr[0], qr[1])
 
 # Sender: Invert the first qubit to set it from 0 to 1 (remember, we're trying to represent 01 by manipulating only a single qubit q[0]).
@@ -74,11 +78,15 @@ program.measure(qr, cr);
 print(run(program, type))
 
 #
-# Example 3: Superdense coding: send two classical bits of information (01) by only manipulating a single qubit: Reverse a Bell state: Entangle 2 qubits, with the first in superposition, then reverse the steps and measure the results, they should be all zeros.
+# Example 3: Superdense coding: send two classical bits of information (01) by only manipulating a single qubit: 
+# Reverse a Bell state: Entangle 2 qubits, with the first in superposition, then reverse the steps and measure 
+# the results, they should be all zeros.
+#
 # The first qubit is owned by Alice.
 # The second qubit is owned by Bob.
 # Alice will modify her qubit qr[0] in order to end up representing 01 to Bob, then send her qubit to him.
-# Bob will reverse the entanglement and superposition of Alice's qubit and read the results, getting 01 from the qubits (his qubit miraculously turns into a 1).
+# Bob will reverse the entanglement and superposition of Alice's qubit and read the results, getting 01 
+# from the qubits (his qubit miraculously turns into a 1).
 
 # Setup qubits.
 qr = QuantumRegister(2)
@@ -88,10 +96,13 @@ program = QuantumCircuit(qr, cr);
 # Sender: Place the first qubit into a superposition, existing as both 0 and 1 simulateneously.
 program.h(qr[0])
 
-# Sender: Entangle the two qubits with a controlled NOT operator. If the first qubit is 1, the second qubit will be inverted, otherwise it remains the same.
+# Sender: Entangle the two qubits with a controlled NOT operator. If the first qubit is 1, 
+# the second qubit will be inverted, otherwise it remains the same.
 program.cx(qr[0], qr[1])
 
-# Sender: Invert the first qubit to set it from 0 to 1 (remember, we're trying to represent 01 by manipulating only a single qubit q[0]).
+# Sender: Invert the first qubit to set it from 0 to 1 (remember, we're trying to represent 01 by 
+# manipulating only a single qubit q[0]).
+#
 # 00  I  - Identity nothing to do
 # 01  X  - program.x(qr[0])
 # 10  Z  - program.z(qr[0])
